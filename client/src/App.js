@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React Chage bucket
+          Learn React Chage bucket EB
         </a>
       </header>
     </div>
