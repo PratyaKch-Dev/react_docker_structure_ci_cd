@@ -53,7 +53,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
           application_name: structure-env
           environment_name: Structure-env
-          existing_bucket_name: smallies-website
+          existing_bucket_name: elasticbeanstalk-ap-southeast-1-455743708863
           region: ap-southeast-1
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
