@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    image: "smallies/dockerhubstructure:-client-1"
+    image: "smallies/dockerhubstructure:structure-client-1"
     mem_limit: 128m
     hostname: client
     stdin_open: true
