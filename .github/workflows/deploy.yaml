@@ -33,6 +33,16 @@ jobs:
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
 
+      - name: Build and push server
+        uses: docker/build-push-action@v2
+        with:
+          context: ./server
+          push: true
+          file: ./server/Dockerfile
+          tags: smallies/dockerhubstructure:structure-server
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
+
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
 
