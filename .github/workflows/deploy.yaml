@@ -51,8 +51,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: structure-env
-          environment_name: Structure-env
+          application_name: structure-application
+          environment_name: Structureapplication-env
           existing_bucket_name: elasticbeanstalk-ap-southeast-smallies-website
           region: ap-southeast-1
           version_label: ${{ github.sha }}
