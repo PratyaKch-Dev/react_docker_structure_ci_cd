@@ -19,7 +19,7 @@ jobs:
           context: ./client
           push: true
           file: ./client/Dockerfile
-          tags: smallies/dockerhubstructure:structure-client
+          tags: smallies/dockerhub:structure-client
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
 
@@ -29,7 +29,7 @@ jobs:
           context: ./nginx
           push: true
           file: ./nginx/Dockerfile
-          tags: smallies/dockerhubstructure:structure-nginx
+          tags: smallies/dockerhub:structure-nginx
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
 
