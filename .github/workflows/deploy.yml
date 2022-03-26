@@ -1,0 +1,59 @@
+name: Deploy Complex
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker build -t smallies/react-test -f ./client/Dockerfile.dev ./client
+      - run: docker run -e CI=true smallies/react-test yarn test -- --coverage
+
+      - name: Build and push client
+        uses: docker/build-push-action@v2
+        with:
+          context: ./client
+          push: true
+          file: ./client/Dockerfile
+          tags: smallies/dockerhubstructure:structure-client
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
+
+      - name: Build and push nginx
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nginx
+          push: true
+          file: ./nginx/Dockerfile
+          tags: smallies/dockerhubstructure:structure-nginx
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
+
+      - name: Build and push server
+        uses: docker/build-push-action@v2
+        with:
+          context: ./server
+          push: true
+          file: ./server/Dockerfile
+          tags: smallies/dockerhubstructure:structure-server
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: docker
+          environment_name: Docker-env
+          existing_bucket_name: elasticbeanstalk-ap-southeast-1-455743708863
+          region: ap-southeast-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
