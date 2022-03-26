@@ -51,8 +51,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: docker
-          environment_name: Docker-env
+          application_name: structure-application
+          environment_name: Structureapplication-env
           existing_bucket_name: elasticbeanstalk-ap-southeast-1-455743708863
           region: ap-southeast-1
           version_label: ${{ github.sha }}
